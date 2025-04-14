@@ -1,0 +1,12 @@
+services:
+  raindrop-item:
+    build: .
+    container_name: raindrop-item
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./.env:/app/.env
+    environment:
+      - FLASK_ENV=development
+    restart: always
