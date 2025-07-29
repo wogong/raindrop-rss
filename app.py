@@ -1,10 +1,11 @@
 from flask import Flask, Response, request
 import json
 import os
+import logging
 from dotenv import load_dotenv
 from raindrop import RaindropClient
 
-load_dotenv()
+logging.basicConfig(level=logging.INFO)
 ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
 PERPAGE = os.environ.get('PERPAGE')
 
@@ -28,7 +29,8 @@ def all_items_feed():
         )
         return Response(feed, mimetype='application/xml')
     except Exception as e:
-        return str(e), 500
+        logging.exception("Error generating Raindrop.io feed")
+        return "An internal error has occurred.", 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
