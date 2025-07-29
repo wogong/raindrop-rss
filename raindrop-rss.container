@@ -1,0 +1,19 @@
+[Unit]
+Description=RSS feed exporter for RainDrop items.
+After=network-online.target
+
+[Container]
+Image=ghcr.io/wogong/raindrop-rss:latest
+AutoUpdate=registry
+
+PublishPort=5000:5000
+
+Environment=ACCESS_TOKEN=<ACCESS_TOKEN>
+Environment=PERPAGE=50
+Environment=FLASK_ENV=development
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

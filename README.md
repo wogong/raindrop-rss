@@ -1,4 +1,4 @@
-# Raindrop.io to RSS
+# Raindrop.io items to RSS
 
 A service that generates RSS feeds from Raindrop.io items.
 
@@ -23,7 +23,7 @@ To get your Raindrop.io access token:
 
 1. Go to https://app.raindrop.io/settings/integrations
 2. Create a new application
-3. Copy the test token
+3. Copy the token
 
 ## Usage
 
@@ -36,15 +36,23 @@ Access all your Raindrop.io items:
 GET /?perpage=50&page=0
 ```
 
-## Docker
+## Podman or Docker
 
-Build and run the service using Docker:
-
-```bash
-docker-compose up -d
 ```
+podman run -d --name raindrop-rss \
+  -p 5000:5000 \
+  -e ACCESS_TOKEN=<YOUR_ACCESS_TOKEN> \
+  -e PERPAGE=50 \
+  -e FLASK_ENV=production \
+  ghcr.io/wogong/raindrop-rss:latest
+```
+
+if you want to use `systemd` to manage this service, please reference to `raindrop-rss.container`.
 
 ## Environment Variables
 
-- `ACCESS_TOKEN`: Raindrop.io access token (can be set in .env instead)
+- `ACCESS_TOKEN`: Raindrop.io access token, `Test token` actually, see reference.
 - `PERPAGE`: Items per page (default: 50)
+
+## Reference
+- https://developer.raindrop.io/v1/authentication/token
